@@ -65,28 +65,37 @@ def ascii_to_image(ascii_text, font_scale=.8, thickness=2, font=cv2.FONT_HERSHEY
             
     return img
 
+def convertToEdgeASCII(filePath):
+    img = cv2.imread(filePath, cv2.IMREAD_GRAYSCALE)
+    ascii_rows = edges_ascii(img)
+    ascii_text = "\n".join(["".join(row) for row in ascii_rows])
+    return ascii_text
 
-# read in original image
-image_path = "photos/squirrel.jpg"
-img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+def convertToContrastASCII(filePath):
+    img = cv2.imread(filePath, cv2.IMREAD_GRAYSCALE)
+    ascii_rows = contrast_ascii(img)
+    ascii_text = "\n".join(["".join(row) for row in ascii_rows])
+    return ascii_text
 
-# convert to ascii
-ascii_rows = contrast_ascii(img)
-ascii_text = "\n".join(["".join(row) for row in ascii_rows])
+# # read in original image
+# image_path = "photos/squirrel.jpg"
+# img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
 
+# # convert to ascii
+# ascii_rows = contrast_ascii(img)
+# ascii_text = "\n".join(["".join(row) for row in ascii_rows])
 
-# Save ascii text to a text file
-ascii_output_path = "output/ascii_output.txt"
-with open(ascii_output_path, "w") as file:
-    file.write(ascii_text)
-print("ascii text saved to output/ascii_output.txt")
+# # Save ascii text to a text file
+# ascii_output_path = "output/ascii_output.txt"
+# with open(ascii_output_path, "w") as file:
+#     file.write(ascii_text)
+# print("ascii text saved to output/ascii_output.txt")
 
-#convert ascii text to image
-ascii_img = ascii_to_image(ascii_text)
+# #convert ascii text to image
+# ascii_img = ascii_to_image(ascii_text)
 
+# # Save the image as a JPEG
+# image_output_path = "output/ascii_image.jpg"  
+# cv2.imwrite(image_output_path, ascii_img)
 
-# Save the image as a JPEG
-image_output_path = "output/ascii_image.jpg"  
-cv2.imwrite(image_output_path, ascii_img)
-
-print("ascii image saved to output/ascii_image.txt")
+# print("ascii image saved to output/ascii_image.txt")

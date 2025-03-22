@@ -3,6 +3,7 @@
 from Pic2ASCII import image_to_ascii, save_ascii_art
 from PaintingSquirrel import loadingSquirrel
 from camie import webcamShot
+from convert_to_ascii import convertToEdgeASCII, convertToContrastASCII
 import os
 import platform
 import time
@@ -63,7 +64,29 @@ def pictureFile():
         except FileNotFoundError:
             print(f"Error: The file '{filePath}' does not exist. Please try again.")
 
-    ascii_art = image_to_ascii(filePath, new_width=150)  # Adjust width for better output
+        print("Please select a conversion style: ")
+        print("[1] Outline")
+        print("[2] Texture")
+        print("[3] Quit")
+
+    while True:
+        modeOfOperation = input("Select mode: ")
+
+        # Code from https://www.geeksforgeeks.org/switch-case-in-python-replacement/
+        match modeOfOperation:
+            case '1':
+                pictureFile()
+                break
+            case '2':
+                webcam()
+                break
+            case '3':
+                break
+            case _:
+                pass
+
+    # ascii_art = image_to_ascii(filePath, new_width=150)  # Adjust width for better output
+    ascii_art = convertToASCII(filePath)
     loadingSquirrel(2)
     saveASCIIImage(ascii_art)
 
