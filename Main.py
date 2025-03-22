@@ -126,18 +126,44 @@ def saveASCIIImage(ASCII):
     print("Please give a name to save the file as: ")
     saveAs = input("Save as: ")
 
-    # Check if that file already exists?
+    while True:
+        print("Please select a file format: ")
+        print("[1] .jpg")
+        print("[2] .txt")
+        print("[3] Quit")
+        fileFormat = input("Select format: ")
 
-    # Ensure the file has a .txt extension if not provided
-    if not saveAs.endswith(".jpg"):
-        saveAs += ".jpg"
+        match fileFormat:
+            case '1':
+                # Ensure the file has a .jpg extension if not provided
+                if not saveAs.endswith(".jpg"):
+                    saveAs += ".jpg"
 
-    pictures_folder = get_pictures_folder()
-    os.makedirs(pictures_folder, exist_ok=True)
-    file_path = os.path.join(pictures_folder, saveAs)
+                pictures_folder = get_pictures_folder()
+                os.makedirs(pictures_folder, exist_ok=True)
+                file_path = os.path.join(pictures_folder, saveAs)
 
-    with open(file_path, "w") as file: 
-        cv2.imwrite(file_path, ASCII)
+                with open(file_path, "w") as file: 
+                    cv2.imwrite(file_path, ASCII)
+
+                break
+            case '2':
+                # Ensure the file has a .txt extension if not provided
+                if not saveAs.endswith(".txt"):
+                    saveAs += ".txt"
+
+                pictures_folder = get_pictures_folder()
+                os.makedirs(pictures_folder, exist_ok=True)
+                file_path = os.path.join(pictures_folder, saveAs)
+
+                with open(file_path, "w") as file:
+                    file.write(ASCII)
+
+                break
+            case '3':
+                break
+            case _:
+                pass
 
     print(f"File saved to {file_path}")
 
