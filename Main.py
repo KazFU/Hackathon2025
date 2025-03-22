@@ -1,9 +1,8 @@
 # Main.py created by Caden Ziskie with the help of ChatGPT
 
-from Pic2ASCII import image_to_ascii, save_ascii_art
 from PaintingSquirrel import loadingSquirrel
 from camie import webcamShot
-from convert_to_ascii import convertToEdgeASCIIJpg, convertToEdgeASCIITxt, convertToContrastASCIIJpg, convertToContrastASCIITxt
+from convert_to_ascii import convertToEdgeASCIIJpg, convertToEdgeASCIITxt, convertToContrastASCIIJpg, convertToContrastASCIITxt, process_video
 import os
 import platform
 import time
@@ -41,6 +40,7 @@ def main():
                 webcam()
                 break
             case '3':
+                videoFile()
                 break
             case '4':
                 # some video call
@@ -112,6 +112,21 @@ def webcam():
                 break
             case _:
                 pass
+
+def videoFile():
+    print("Please give a file path to the video (e.g., /path/to/video): ")
+    filePath = input("Select file path: ")
+
+    print("Please give a file path for the output file (e.g., /path/to/output): ")
+    outputPath = input("Select output path: ")
+
+    print("Please select a conversion style: ")
+    print("[1] Outline")
+    print("[2] Texture")
+    print("[3] Quit")
+    conversionStyle = input("Select mode: ")
+    
+    process_video(filePath, outputPath, conversionStyle)
 
 def get_pictures_folder():
     home_dir = os.path.expanduser("~")
