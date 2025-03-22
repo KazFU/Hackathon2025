@@ -33,20 +33,6 @@ def main():
 
     closePrgm()
 
-def closePrgm():
-    # All of this multi-line string is contained in closePrgm
-        closingFrame = r""" 
- (\__/)
- (o'^'o)
-(")___(|)
-       v
-    ----
-    |:(|
-    ----
-"""
-        print(closingFrame)
-        print("Sad to see you go. Come back again with nuts!")
-
 def pictureFile():
     # Filepath: Asking for the file path to the image
     while True:
@@ -89,26 +75,36 @@ def pictureFile():
                 pass
 
 def webcam():
-    # All of this multi-line string is contained in function
-    webcamControlsFrame = r""" 
- (\__/)
- (o'.'o)
-(")___(|)
-       v
-    ----
-    |:p|
-    ----
-"""
-    
-    print(webcamControlsFrame)
     print("To take a picture, press the spacebar, then press space again to close preview\nTo close webcam window, press escape")
     print("Please wait for window to appear, can take a min")
     time.sleep(3)
 
-    ascii_art = image_to_ascii(webcamShot(), new_width=150)  # Adjust width for better output
-    loadingSquirrel(2)
-    saveASCIIImage(ascii_art)
-    return
+    while True:
+        print("Please select a conversion style: ")
+        print("[1] Outline")
+        print("[2] Texture")
+        print("[3] Quit")
+        conversionStyle = input("Select mode: ")
+
+        match conversionStyle:
+            case '1':
+                ascii_art = convertToEdgeASCII(webcamShot())
+                loadingSquirrel(2)
+                saveASCIIImage(ascii_art)
+                break
+            case '2':
+                ascii_art = convertToContrastASCII(webcamShot())
+                loadingSquirrel(2)
+                saveASCIIImage(ascii_art)
+                break
+            case '3':
+                break
+            case _:
+                pass
+
+    # ascii_art = image_to_ascii(webcamShot(), new_width=150)  # Adjust width for better output
+    # loadingSquirrel(2)
+    # saveASCIIImage(ascii_art)
 
 def get_pictures_folder():
     home_dir = os.path.expanduser("~")
@@ -166,6 +162,20 @@ def saveASCIIImage(ASCII):
                 pass
 
     print(f"File saved to {file_path}")
+
+def closePrgm():
+    # All of this multi-line string is contained in closePrgm
+        closingFrame = r""" 
+ (\__/)
+ (o'^'o)
+(")___(|)
+       v
+    ----
+    |:(|
+    ----
+"""
+        print(closingFrame)
+        print("Sad to see you go. Come back again with nuts!")
 
 if __name__ == "__main__":
     main()
