@@ -3,7 +3,7 @@
 from Pic2ASCII import image_to_ascii, save_ascii_art
 from PaintingSquirrel import loadingSquirrel
 from camie import webcamShot
-from convert_to_ascii import convertToEdgeASCII, convertToContrastASCII
+from convert_to_ascii import convertToEdgeASCIIJpg, convertToEdgeASCIITxt, convertToContrastASCIIJpg, convertToContrastASCIITxt
 import os
 import platform
 import time
@@ -60,14 +60,14 @@ def pictureFile():
 
         match conversionStyle:
             case '1':
-                ascii_art = convertToEdgeASCII(filePath)
-                loadingSquirrel(2)
-                saveASCIIImage(ascii_art)
+                # ascii_art = convertToEdgeASCII(filePath)
+                # loadingSquirrel(2)
+                saveASCIIImage(filePath, '1')
                 break
             case '2':
-                ascii_art = convertToContrastASCII(filePath)
-                loadingSquirrel(2)
-                saveASCIIImage(ascii_art)
+                # ascii_art = convertToContrastASCII(filePath)
+                # loadingSquirrel(2)
+                saveASCIIImage(filePath, '2')
                 break
             case '3':
                 break
@@ -75,9 +75,7 @@ def pictureFile():
                 pass
 
 def webcam():
-    print("To take a picture, press the spacebar, then press space again to close preview\nTo close webcam window, press escape")
-    print("Please wait for window to appear, can take a min")
-    time.sleep(3)
+    print("To take a picture, press the spacebar\nTo close webcam window, press escape")
 
     while True:
         print("Please select a conversion style: ")
@@ -88,14 +86,14 @@ def webcam():
 
         match conversionStyle:
             case '1':
-                ascii_art = convertToEdgeASCII(webcamShot())
-                loadingSquirrel(2)
-                saveASCIIImage(ascii_art)
+                # ascii_art = convertToEdgeASCII(webcamShot())
+                # loadingSquirrel(2)
+                saveASCIIImage(webcamShot(), '1')
                 break
             case '2':
-                ascii_art = convertToContrastASCII(webcamShot())
-                loadingSquirrel(2)
-                saveASCIIImage(ascii_art)
+                # ascii_art = convertToContrastASCII(webcamShot())
+                # loadingSquirrel(2)
+                saveASCIIImage(webcamShot(), '2')
                 break
             case '3':
                 break
@@ -118,7 +116,7 @@ def get_pictures_folder():
 
     return pictures_folder
 
-def saveASCIIImage(ASCII):
+def saveASCIIImage(ASCII, style):
     print("Please give a name to save the file as: ")
     saveAs = input("Save as: ")
 
@@ -129,8 +127,10 @@ def saveASCIIImage(ASCII):
         print("[3] Quit")
         fileFormat = input("Select format: ")
 
+        fileFormat = fileFormat + style
+
         match fileFormat:
-            case '1':
+            case '11': # jpg outline
                 # Ensure the file has a .jpg extension if not provided
                 if not saveAs.endswith(".jpg"):
                     saveAs += ".jpg"
@@ -139,11 +139,28 @@ def saveASCIIImage(ASCII):
                 os.makedirs(pictures_folder, exist_ok=True)
                 file_path = os.path.join(pictures_folder, saveAs)
 
+                ascii_art = convertToEdgeASCIIJpg(ASCII)
+
                 with open(file_path, "w") as file: 
-                    cv2.imwrite(file_path, ASCII)
+                    cv2.imwrite(file_path, ascii_art)
 
                 break
-            case '2':
+            case '12': # jpg texture
+                # Ensure the file has a .jpg extension if not provided
+                if not saveAs.endswith(".jpg"):
+                    saveAs += ".jpg"
+
+                pictures_folder = get_pictures_folder()
+                os.makedirs(pictures_folder, exist_ok=True)
+                file_path = os.path.join(pictures_folder, saveAs)
+
+                ascii_art = convertToContrastASCIIJpg(ASCII)
+
+                with open(file_path, "w") as file: 
+                    cv2.imwrite(file_path, ascii_art)
+
+                break
+            case '21': # txt outline
                 # Ensure the file has a .txt extension if not provided
                 if not saveAs.endswith(".txt"):
                     saveAs += ".txt"
@@ -152,8 +169,25 @@ def saveASCIIImage(ASCII):
                 os.makedirs(pictures_folder, exist_ok=True)
                 file_path = os.path.join(pictures_folder, saveAs)
 
+                ascii_art = convertToEdgeASCIITxt(ASCII)
+
                 with open(file_path, "w") as file:
-                    file.write(ASCII)
+                    file.write(ascii_art)
+
+                break
+            case '22': # txt texture
+                # Ensure the file has a .txt extension if not provided
+                if not saveAs.endswith(".txt"):
+                    saveAs += ".txt"
+
+                pictures_folder = get_pictures_folder()
+                os.makedirs(pictures_folder, exist_ok=True)
+                file_path = os.path.join(pictures_folder, saveAs)
+
+                ascii_art = convertToContrastASCIITxt(ASCII)
+
+                with open(file_path, "w") as file:
+                    file.write(ascii_art)
 
                 break
             case '3':
