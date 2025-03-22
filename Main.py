@@ -10,10 +10,24 @@ import time
 import cv2
 
 def main():
-    print("A terminal JPG to ASCII conversion program now with 100% more squirrels.\nPlease select a mode of operation: ")
+    logo = r""" 
+         __                                                 __     __
+        /\_\                                               /\_\   /\_\
+ ______ \/_/_     ______     ______     ______     ______  \/_/_  \/_/_
+/\  __ \  /\ \   /\  ___\   /\____ \   /\  ___\   /\  ___\   /\ \   /\ \   
+\ \ \_\ \ \ \ \  \ \ \____  \ \  __ \  \ \___  \  \ \ \____  \ \ \  \ \ \  
+ \ \  ___\ \ \_\  \ \_____\  \ \_____\  \/\_____\  \ \_____\  \ \_\  \ \_\ 
+  \ \ \__/  \/_/   \/_____/   \/_____/   \/_____/   \/_____/   \/_/   \/_/ 
+   \ \ \                                   BY JOCALEXRYEM
+    \/_/
+    """
+
+    print(logo, "\n")
+    print("Please select a mode of operation: ")
     print("[1] Picture File")
-    print("[2] Webcam")
-    print("[3] Quit")
+    print("[2] Webcam (pictures only)")
+    print("[3] Video File")
+    print("[4] Quit")
 
     while True:
         modeOfOperation = input("Select mode: ")
@@ -27,6 +41,9 @@ def main():
                 webcam()
                 break
             case '3':
+                break
+            case '4':
+                # some video call
                 break
             case _:
                 pass
@@ -199,7 +216,7 @@ def closePrgm():
     ----
 """
         print(closingFrame)
-        print("Sad to see you go. Come back again with nuts!")
+        print("Sad to see you go. Come back again!")
 
 if __name__ == "__main__":
     main()
