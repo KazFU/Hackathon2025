@@ -2,7 +2,7 @@
 
 from Pic2ASCII import image_to_ascii, save_ascii_art
 from PaintingSquirrel import loadingSquirrel
-from camera import webcamShot
+from camie import webcamShot
 import os
 import platform
 
