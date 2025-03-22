@@ -7,6 +7,7 @@ from convert_to_ascii import convertToEdgeASCII, convertToContrastASCII
 import os
 import platform
 import time
+import cv2
 
 def main():
     print("A terminal JPG to ASCII conversion program now with 100% more squirrels.\nPlease select a mode of operation: ")
@@ -50,7 +51,7 @@ def pictureFile():
     # Filepath: Asking for the file path to the image
     while True:
         print("Please give a file path to the picture (e.g., /path/to/image.jpg): ")
-        filePath = input()
+        filePath = input("Select file path: ")
 
         # Ensure the file has a .jpg extension if not provided
         if not filePath.endswith(".jpg"):
@@ -69,7 +70,7 @@ def pictureFile():
         print("[1] Outline")
         print("[2] Texture")
         print("[3] Quit")
-        conversionStyle = input()
+        conversionStyle = input("Select mode: ")
 
         match conversionStyle:
             case '1':
@@ -123,20 +124,20 @@ def get_pictures_folder():
 
 def saveASCIIImage(ASCII):
     print("Please give a name to save the file as: ")
-    saveAs = input()
+    saveAs = input("Save as: ")
 
     # Check if that file already exists?
 
     # Ensure the file has a .txt extension if not provided
-    if not saveAs.endswith(".txt"):
-        saveAs += ".txt"
+    if not saveAs.endswith(".jpg"):
+        saveAs += ".jpg"
 
     pictures_folder = get_pictures_folder()
     os.makedirs(pictures_folder, exist_ok=True)
     file_path = os.path.join(pictures_folder, saveAs)
 
-    with open(file_path, "w") as file:
-        file.write(ASCII)
+    with open(file_path, "w") as file: 
+        cv2.imwrite(file_path, ASCII)
 
     print(f"File saved to {file_path}")
 
