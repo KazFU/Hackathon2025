@@ -67,7 +67,7 @@ def ascii_to_image(ascii_rows, font_scale=2, thickness=2, font=cv2.FONT_HERSHEY_
 
 
 # read in original image
-image_path = "photos/maa.jpg"
+image_path = "photos/squirrel.jpg"
 img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
 
 # convert to ascii
@@ -84,9 +84,8 @@ print("ascii text saved to output/ascii_output.txt")
 #convert ascii text to image
 ascii_img = ascii_to_image(ascii_rows)
 
-
 # Save the image as a JPEG
 image_output_path = "output/ascii_image.jpg"  
 cv2.imwrite(image_output_path, ascii_img)
 
-print("ascii image saved to output/ascii_image.txt")
+# print("ascii image saved to output/ascii_image.txt")
