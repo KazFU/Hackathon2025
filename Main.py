@@ -1,4 +1,4 @@
-# Created by Caden Ziskie with the help of ChatGPT
+# Main.py created by Caden Ziskie with the help of ChatGPT
 
 from Pic2ASCII import image_to_ascii, save_ascii_art
 from PaintingSquirrel import loadingSquirrel

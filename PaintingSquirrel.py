@@ -1,4 +1,4 @@
-# Created with the help of ChatGPT
+# PaintingSquirrel.py created by Caden Z. with the help of ChatGPT
 
 import time
 import os
