@@ -2,6 +2,7 @@
 
 from PaintingSquirrel import loadingSquirrel
 from camie import webcamShot
+from camie import webcamVideo
 from convert_to_ascii import convertToEdgeASCIIJpg, convertToEdgeASCIITxt, convertToContrastASCIIJpg, convertToContrastASCIITxt, process_video
 import os
 import platform
@@ -24,9 +25,10 @@ def main():
     print(logo, "\n")
     print("Please select a mode of operation: ")
     print("[1] Picture File")
-    print("[2] Webcam (pictures only)")
-    print("[3] Video File")
-    print("[4] Quit")
+    print("[2] Webcam Pictures")
+    print("[3] Webcam Videos")
+    print("[4] Video File")
+    print("[5] Quit")
 
     while True:
         modeOfOperation = input("Select mode: ")
@@ -37,12 +39,15 @@ def main():
                 pictureFile()
                 break
             case '2':
-                webcam()
+                webcamPic()
                 break
             case '3':
-                videoFile()
+                webamVid()
                 break
             case '4':
+                videoFile()
+                break
+            case '5':
                 break
             case _:
                 pass
@@ -89,7 +94,7 @@ def pictureFile():
             case _:
                 pass
 
-def webcam():
+def webcamPic():
     print("To take a picture, press the spacebar\nTo close webcam window, press escape")
 
     # Select what style of ASCII conversion, then call webcamShot to get a pic, convert and play loading animation
@@ -113,6 +118,9 @@ def webcam():
                 break
             case _:
                 pass
+def webcamVid():
+    print("Recording will start when you press 'r'. Press 'q' to stop recording.")
+    webcamVideo()
 
 def videoFile():
     print("Please give a file path to the video (e.g., /path/to/video): ")

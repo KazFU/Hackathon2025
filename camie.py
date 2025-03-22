@@ -72,8 +72,54 @@ def webcamShot():
                     cam.release()
                     cv2.destroyAllWindows()
                     return img_path
+                
+def webcamVideo():
+    video_dir = 'videos'
+    os.makedirs(video_dir, exist_ok=True)  # Ensure video directory exists
+
+    cam = cv2.VideoCapture(0)
+    cam.set(3, 1500)  # Width
+    cam.set(4, 1500)  # Height
+
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')  # Define video codec
+    out = None  # Initialize video writer
+    recording = False  # Track recording state
+
+    print("Press 'R' to start recording\nPress 'S' to stop recording\nPress 'Esc' to exit")
+
+    while cam.isOpened():
+        ret, frame = cam.read()
+        if not ret:
+            print("Failed to capture video")
+            break
+
+        cv2.imshow('RECORDING', frame)
+
+        key = cv2.waitKey(1) & 0xFF
+
+        if key == ord('r') and not recording:
+            # Start recording
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            video_path = os.path.join(video_dir, f"{timestamp}.avi")
+            out = cv2.VideoWriter(video_path, fourcc, 20.0, (int(cam.get(3)), int(cam.get(4))))
+            recording = True
+            print(f"Recording started... Press 'S' to stop. Saving to {video_path}")
+
+        if key == ord('s') and recording:
+            # Stop recording
+            recording = False
+            out.release()
+            print(f"Recording stopped. Video saved at: {video_path}")
+
+        if recording and out is not None:
+            out.write(frame)
+
+        if key == 27:  # Escape key to exit
+            break
 
     cam.release()
+    if out is not None:
+        out.release()
     cv2.destroyAllWindows()
 
-    return img_path
+#    return video_path
