@@ -37,12 +37,12 @@ def contrast_ascii(img, width=400):
     scaled = (contrast_img / 255 * (len(ASCII_CHARS) - 1)).astype(int)
     return np.array([[ASCII_CHARS[p] for p in row] for row in scaled])
     
-def ascii_to_image(ascii_text, font_scale=.8, thickness=2, font=cv2.FONT_HERSHEY_SIMPLEX):
+def ascii_to_image(ascii_rows, font_scale=2, thickness=2, font=cv2.FONT_HERSHEY_SIMPLEX):
 
     height_factor = 25
     width_factor = 10
     # Split the ASCII art into rows
-    ascii_rows = ascii_text.split("\n")
+    # ascii_rows = ascii_text.split("\n")
     
     # Set the dimensions of the output image
     height = len(ascii_rows) * height_factor  # Height based on number of rows
@@ -67,7 +67,7 @@ def ascii_to_image(ascii_text, font_scale=.8, thickness=2, font=cv2.FONT_HERSHEY
 
 
 # read in original image
-image_path = "photos/squirrel.jpg"
+image_path = "photos/maa.jpg"
 img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
 
 # convert to ascii
@@ -82,7 +82,7 @@ with open(ascii_output_path, "w") as file:
 print("ascii text saved to output/ascii_output.txt")
 
 #convert ascii text to image
-ascii_img = ascii_to_image(ascii_text)
+ascii_img = ascii_to_image(ascii_rows)
 
 
 # Save the image as a JPEG
