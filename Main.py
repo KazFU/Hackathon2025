@@ -1,4 +1,5 @@
 from Pic2ASCII import image_to_ascii, save_ascii_art
+from PaintingSquirrel import loadingSquirrel
 
 def main():
     print("A terminal JPG to ASCII conversion program now with 100% more squirrels.")
@@ -30,6 +31,7 @@ def main():
 
     print("Now converting...")
     ascii_art = image_to_ascii(filePath, new_width=150)  # Adjust width for better output
+    loadingSquirrel(2)
     save_ascii_art(ascii_art, saveAs)
 
 if __name__ == "__main__":
