@@ -64,31 +64,28 @@ def pictureFile():
         except FileNotFoundError:
             print(f"Error: The file '{filePath}' does not exist. Please try again.")
 
+    while True:
         print("Please select a conversion style: ")
         print("[1] Outline")
         print("[2] Texture")
         print("[3] Quit")
+        conversionStyle = input()
 
-    while True:
-        modeOfOperation = input("Select mode: ")
-
-        # Code from https://www.geeksforgeeks.org/switch-case-in-python-replacement/
-        match modeOfOperation:
+        match conversionStyle:
             case '1':
-                pictureFile()
+                ascii_art = convertToEdgeASCII(filePath)
+                loadingSquirrel(2)
+                saveASCIIImage(ascii_art)
                 break
             case '2':
-                webcam()
+                ascii_art = convertToContrastASCII(filePath)
+                loadingSquirrel(2)
+                saveASCIIImage(ascii_art)
                 break
             case '3':
                 break
             case _:
                 pass
-
-    # ascii_art = image_to_ascii(filePath, new_width=150)  # Adjust width for better output
-    ascii_art = convertToASCII(filePath)
-    loadingSquirrel(2)
-    saveASCIIImage(ascii_art)
 
 def webcam():
     # All of this multi-line string is contained in function
