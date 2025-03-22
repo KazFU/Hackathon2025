@@ -3,17 +3,18 @@ import numpy as np
 
 # ASCII characters from light to dark
 ASCII_CHARS = " .:-=+*%#"
-HEIGHT_FACTOR = 25
-WIDTH_FACTOR = 10
+SHORT_ASCII_CHARS = " #"
+HEIGHT_FACTOR = 50
+WIDTH_FACTOR = 20
 
 def reshape_image(img):
     # Resize while maintaining aspect ratio
     aspect_ratio = img.shape[1] / img.shape[0]
-    width = int(img.shape[1]/3)
+    width = int(img.shape[1]/5)
     height = int(width / aspect_ratio * (WIDTH_FACTOR/HEIGHT_FACTOR))  # Adjust the factor based on your text editor
     return cv2.resize(img, (width, height))
 
-def edges_ascii(img, width=400):
+def edges_ascii(img, width=400, precision=5):
    
     # Adjust image size+++
     reshaped_img = reshape_image(img)
@@ -22,12 +23,13 @@ def edges_ascii(img, width=400):
     edges_img = cv2.Canny(reshaped_img, 100, 200)
 
      # Vectorized ASCII mapping using NumPy
-    scaled = (edges_img / 255 * (len(ASCII_CHARS) - 1)).astype(int)
-    return np.array([[ASCII_CHARS[p] for p in row] for row in scaled])
+    
+    scaled = (edges_img / 255 * (len(SHORT_ASCII_CHARS) - 1)).astype(int)
+    return np.array([[SHORT_ASCII_CHARS[p] for p in row] for row in scaled])
     
     # return "\n".join(["".join(row) for row in ascii_img])
 
-def contrast_ascii(img, width=400):
+def contrast_ascii(img, width=400, precision = 5):
    
     # Adjust image size
     reshaped_img = reshape_image(img)
@@ -40,10 +42,8 @@ def contrast_ascii(img, width=400):
     scaled = (contrast_img / 255 * (len(ASCII_CHARS) - 1)).astype(int)
     return np.array([[ASCII_CHARS[p] for p in row] for row in scaled])
     
-def ascii_to_image(ascii_rows, font_scale=2, thickness=2, font=cv2.FONT_HERSHEY_SIMPLEX):
+def ascii_to_image(ascii_rows, font_scale=1., thickness=3, font=cv2.FONT_HERSHEY_SIMPLEX):
 
-    HEIGHT_FACTOR = 25
-    WIDTH_FACTOR = 10
     # Split the ASCII art into rows
     # ascii_rows = ascii_text.split("\n")
     
@@ -66,7 +66,15 @@ def ascii_to_image(ascii_rows, font_scale=2, thickness=2, font=cv2.FONT_HERSHEY_
                 cv2.putText(img, char, (x0, y0 + i * dy), font, font_scale, (255,255,255), thickness, lineType=cv2.LINE_AA)
             x0 += WIDTH_FACTOR  # Move the x-position for the next character
             
-    return img
+    # Compress the image using JPEG format with specified quality
+    # The quality value is between 0 and 100, where 100 is the highest quality (least compression)
+    encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 10]
+    _, compressed_img = cv2.imencode('.jpg', img, encode_param)
+
+    # Decode the compressed image back to a NumPy array
+    compressed_img = cv2.imdecode(compressed_img, 1)
+
+    return compressed_img
 
 def convertToContrastASCIIJpg(filePath):
     img = cv2.imread(filePath, cv2.IMREAD_GRAYSCALE)
@@ -91,7 +99,7 @@ def convertToEdgeASCIITxt(filePath):
     return ascii_text
 
 
-def process_video(input_video_path, output_video_path, ascii_type):
+def process_video(input_video_path, output_video_path, ascii_type, precision = 10):
     """Process the video and create an ASCII video."""
     # Open the input video file
     video_capture = cv2.VideoCapture(input_video_path)
@@ -117,9 +125,9 @@ def process_video(input_video_path, output_video_path, ascii_type):
 
         # Convert the grayscale frame to ASCII
         if ascii_type == "edges":
-            ascii_rows = edges_ascii(frame_gray)
+            ascii_rows = edges_ascii(frame_gray, precision)
         elif ascii_type == "contrast":
-            ascii_rows = contrast_ascii(frame_gray)
+            ascii_rows = contrast_ascii(frame_gray, precision)
         ascii_img = ascii_to_image(ascii_rows)
 
         # Resize the ASCII image to match the video dimensions
