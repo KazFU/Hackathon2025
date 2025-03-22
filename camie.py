@@ -23,9 +23,7 @@ def webcamShot():
     cam.set(3, 1500)  # Width
     cam.set(4, 1500)  # Height
 
-
-    # reading the input using the camera 
-    # result, image = cam.read() 
+    solidCHEESE_open = False # track if solidCHEESE has been opened
 
     while True:
         ret, frame = cam.read()  # capture new frame in each loop iteration
@@ -62,12 +60,18 @@ def webcamShot():
             print('CHEESE destroyed (?)')
 
             # Wait for space key again before resuming live video
-            while True:
+            while solidCHEESE_open:
                 key = cv2.waitKey(1)
                 if key == ord(' '):  # Press space again to resume
                     cv2.destroyWindow("solidCHEESE")  # Close saved image window
+                    solidCHEESE_open = False
                     print("solidCHEESE closed. Resuming video feed.")
                     break  # Exit inner loop, resume live video
+                elif key == 27:
+                    print("Program exited by user.")
+                    cam.release()
+                    cv2.destroyAllWindows()
+                    return img_path
 
     cam.release()
     cv2.destroyAllWindows()
