@@ -60,13 +60,11 @@ def pictureFile():
 
         match conversionStyle:
             case '1':
-                # ascii_art = convertToEdgeASCII(filePath)
-                # loadingSquirrel(2)
+                loadingSquirrel(2)
                 saveASCIIImage(filePath, '1')
                 break
             case '2':
-                # ascii_art = convertToContrastASCII(filePath)
-                # loadingSquirrel(2)
+                loadingSquirrel(2)
                 saveASCIIImage(filePath, '2')
                 break
             case '3':
@@ -86,23 +84,17 @@ def webcam():
 
         match conversionStyle:
             case '1':
-                # ascii_art = convertToEdgeASCII(webcamShot())
-                # loadingSquirrel(2)
                 saveASCIIImage(webcamShot(), '1')
+                loadingSquirrel(2)
                 break
             case '2':
-                # ascii_art = convertToContrastASCII(webcamShot())
-                # loadingSquirrel(2)
                 saveASCIIImage(webcamShot(), '2')
+                loadingSquirrel(2)
                 break
             case '3':
                 break
             case _:
                 pass
-
-    # ascii_art = image_to_ascii(webcamShot(), new_width=150)  # Adjust width for better output
-    # loadingSquirrel(2)
-    # saveASCIIImage(ascii_art)
 
 def get_pictures_folder():
     home_dir = os.path.expanduser("~")
@@ -194,8 +186,6 @@ def saveASCIIImage(ASCII, style):
                 break
             case _:
                 pass
-
-    print(f"File saved to {file_path}")
 
 def closePrgm():
     # All of this multi-line string is contained in closePrgm
