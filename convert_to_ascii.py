@@ -124,9 +124,10 @@ def process_video(input_video_path, output_video_path, ascii_type, precision = 1
         frame_gray = cv2.rotate(frame_gray, cv2.ROTATE_90_CLOCKWISE)  # Rotate 90 degrees clockwise
 
         # Convert the grayscale frame to ASCII
+        ascii_rows =""
         if ascii_type == "edges":
             ascii_rows = edges_ascii(frame_gray, precision)
-        elif ascii_type == "contrast":
+        else:
             ascii_rows = contrast_ascii(frame_gray, precision)
         ascii_img = ascii_to_image(ascii_rows)
 

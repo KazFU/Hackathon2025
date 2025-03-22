@@ -42,7 +42,7 @@ def main():
                 webcamPic()
                 break
             case '3':
-                webamVid()
+                webcamVid()
                 break
             case '4':
                 videoFile()

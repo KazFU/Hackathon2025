@@ -72,6 +72,7 @@ def webcamShot():
                     cam.release()
                     cv2.destroyAllWindows()
                     return img_path
+    return img_path
                 
 def webcamVideo():
     video_dir = 'videos'
