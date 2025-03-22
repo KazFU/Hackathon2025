@@ -65,15 +65,27 @@ def ascii_to_image(ascii_rows, font_scale=2, thickness=2, font=cv2.FONT_HERSHEY_
             
     return img
 
-def convertToContrastASCII(filePath):
+def convertToContrastASCIIJpg(filePath):
     img = cv2.imread(filePath, cv2.IMREAD_GRAYSCALE)
     ascii_rows = contrast_ascii(img)
     return ascii_to_image(ascii_rows)
 
-def convertToEdgeASCII(filePath):
+def convertToContrastASCIITxt(filePath):
+    img = cv2.imread(filePath, cv2.IMREAD_GRAYSCALE)
+    ascii_rows = contrast_ascii(img)
+    ascii_text = "\n".join(["".join(row) for row in ascii_rows])
+    return ascii_text
+
+def convertToEdgeASCIIJpg(filePath):
     img = cv2.imread(filePath, cv2.IMREAD_GRAYSCALE)
     ascii_rows = edges_ascii(img)
     return ascii_to_image(ascii_rows)
+
+def convertToEdgeASCIITxt(filePath):
+    img = cv2.imread(filePath, cv2.IMREAD_GRAYSCALE)
+    ascii_rows = edges_ascii(img)
+    ascii_text = "\n".join(["".join(row) for row in ascii_rows])
+    return ascii_text
 
 
 # # read in original image
