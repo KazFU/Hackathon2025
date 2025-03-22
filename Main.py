@@ -1,26 +1,36 @@
-import argparse
+from Pic2ASCII import image_to_ascii, save_ascii_art
 
 def main():
-    parser = argparse.ArgumentParser(description="A terminal JPG to ASCII conversion program now with 100% more squirrels.")
-    
-    # Required argument
-    parser.add_argument('name', type=str, help='Your name')
-    
-    # Optional argument for custom greeting
-    parser.add_argument('--greeting', type=str, default='Hello', help='Greeting message')
-    
-    # Optional flag for a goodbye message
-    parser.add_argument('--goodbye', action='store_true', help='Print a goodbye message')
-    
-    # Parse the arguments
-    args = parser.parse_args()
+    print("A terminal JPG to ASCII conversion program now with 100% more squirrels.")
 
-    # Greet the user
-    print(f"{args.greeting}, {args.name}!")
-    
-    # Goodbye message if the flag is set
-    if args.goodbye:
-        print(f"Goodbye, {args.name}!")
+    # Filepath: Asking for the file path to the image
+    while True:
+        print("Please give a file path to the picture (e.g., /path/to/image.jpg): ")
+        filePath = input()
+
+        # Ensure the file has a .jpg extension if not provided
+        if not filePath.endswith(".jpg"):
+            filePath += ".jpg"
+
+        # Check if the file path exists
+        try:
+            with open(filePath, 'rb') as file:
+                pass
+            break
+        except FileNotFoundError:
+            print(f"Error: The file '{filePath}' does not exist. Please try again.")
+
+    # Save As
+    print("Please give a name to save the file as: ")
+    saveAs = input()
+
+    # Ensure the file has a .txt extension if not provided
+    if not saveAs.endswith(".txt"):
+        saveAs += ".txt"
+
+    print("Now converting...")
+    ascii_art = image_to_ascii(filePath, new_width=150)  # Adjust width for better output
+    save_ascii_art(ascii_art, saveAs)
 
 if __name__ == "__main__":
     main()

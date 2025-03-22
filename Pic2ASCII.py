@@ -44,13 +44,6 @@ def image_to_ascii(image_path, new_width=100):
     return ascii_art
 
 # Function to save ASCII art to a file
-def save_ascii_art(ascii_art, filename="ascii_artV2.txt"):
+def save_ascii_art(ascii_art, filename="ascii_art.txt"):
     with open(filename, "w") as f:
         f.write(ascii_art)
-
-# Example usage
-if __name__ == "__main__":
-    image_path = "/home/bazzite/Documents/Hackathon2025/squirrel-with-a-gun.jpg"  # Provide the image path here
-    ascii_art = image_to_ascii(image_path, new_width=150)  # Adjust width for better output
-    print(ascii_art)  # Print to the console
-    save_ascii_art(ascii_art)  # Optionally save to a file
