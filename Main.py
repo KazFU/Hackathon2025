@@ -5,6 +5,7 @@ from PaintingSquirrel import loadingSquirrel
 from camie import webcamShot
 import os
 import platform
+import time
 
 def main():
     print("A terminal JPG to ASCII conversion program now with 100% more squirrels.\nPlease select a mode of operation: ")
@@ -79,8 +80,9 @@ def webcam():
 """
     
     print(webcamControlsFrame)
-    print("To take a picture, press the spacebar\nTo close webcam window, press escape")
+    print("To take a picture, press the spacebar, then press space again to close preview\nTo close webcam window, press escape")
     print("Please wait for window to appear, can take a min")
+    time.sleep(3)
 
     ascii_art = image_to_ascii(webcamShot(), new_width=150)  # Adjust width for better output
     loadingSquirrel(2)
