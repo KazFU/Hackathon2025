@@ -43,7 +43,6 @@ def main():
                 videoFile()
                 break
             case '4':
-                # some video call
                 break
             case _:
                 pass
@@ -68,6 +67,7 @@ def pictureFile():
         except FileNotFoundError:
             print(f"Error: The file '{filePath}' does not exist. Please try again.")
 
+    # Select what style of ASCII conversion, then convert and play loading animation
     while True:
         print("Please select a conversion style: ")
         print("[1] Outline")
@@ -92,6 +92,7 @@ def pictureFile():
 def webcam():
     print("To take a picture, press the spacebar\nTo close webcam window, press escape")
 
+    # Select what style of ASCII conversion, then call webcamShot to get a pic, convert and play loading animation
     while True:
         print("Please select a conversion style: ")
         print("[1] Outline")
@@ -144,6 +145,7 @@ def saveASCIIImage(ASCII, style):
     print("Please give a name to save the file as: ")
     saveAs = input("Save as: ")
 
+    # Select output file format
     while True:
         print("Please select a file format: ")
         print("[1] .jpg")
@@ -151,7 +153,7 @@ def saveASCIIImage(ASCII, style):
         print("[3] Quit")
         fileFormat = input("Select format: ")
 
-        fileFormat = fileFormat + style
+        fileFormat = fileFormat + style # Add style to string for follwing switch cases
 
         match fileFormat:
             case '11': # jpg outline
@@ -159,18 +161,20 @@ def saveASCIIImage(ASCII, style):
                 if not saveAs.endswith(".jpg"):
                     saveAs += ".jpg"
 
+                # Get path to user's Pictures folder
                 pictures_folder = get_pictures_folder()
                 os.makedirs(pictures_folder, exist_ok=True)
                 file_path = os.path.join(pictures_folder, saveAs)
 
+                # Call requested conversion type
                 ascii_art = convertToEdgeASCIIJpg(ASCII)
 
+                # Save file
                 with open(file_path, "w") as file: 
                     cv2.imwrite(file_path, ascii_art)
 
                 break
             case '12': # jpg texture
-                # Ensure the file has a .jpg extension if not provided
                 if not saveAs.endswith(".jpg"):
                     saveAs += ".jpg"
 
@@ -185,7 +189,6 @@ def saveASCIIImage(ASCII, style):
 
                 break
             case '21': # txt outline
-                # Ensure the file has a .txt extension if not provided
                 if not saveAs.endswith(".txt"):
                     saveAs += ".txt"
 
@@ -200,7 +203,6 @@ def saveASCIIImage(ASCII, style):
 
                 break
             case '22': # txt texture
-                # Ensure the file has a .txt extension if not provided
                 if not saveAs.endswith(".txt"):
                     saveAs += ".txt"
 
