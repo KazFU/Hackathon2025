@@ -82,7 +82,7 @@ def webcamVideo():
     cam.set(3, 1500)  # Width
     cam.set(4, 1500)  # Height
 
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')  # Define video codec
+    fourcc = cv2.VideoWriter_fourcc(*"mp4v")  # Define video codec
     out = None  # Initialize video writer
     recording = False  # Track recording state
 
@@ -101,7 +101,7 @@ def webcamVideo():
         if key == ord('r') and not recording:
             # Start recording
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            video_path = os.path.join(video_dir, f"{timestamp}.avi") # Change to save as mp4
+            video_path = os.path.join(video_dir, f"{timestamp}.mp4")
             out = cv2.VideoWriter(video_path, fourcc, 20.0, (int(cam.get(3)), int(cam.get(4))))
             recording = True
             print(f"Recording started... Press 'S' to stop. Saving to {video_path}")
