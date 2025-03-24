@@ -21,6 +21,7 @@ def edges_ascii(img, width=400, precision=5):
 
     # edge detection
     edges_img = cv2.Canny(reshaped_img, 100, 200)
+    # edges_img = cv2.Canny(reshaped_img, 50, 150)  # Lower thresholds for more edges
 
      # Vectorized ASCII mapping using NumPy
     
@@ -40,6 +41,8 @@ def contrast_ascii(img, width=400, precision = 5):
 
     # convert to ascii
     scaled = (contrast_img / 255 * (len(ASCII_CHARS) - 1)).astype(int)
+    # scaled = ((contrast_img - contrast_img.min()) / (contrast_img.max() - contrast_img.min()) * (len(ASCII_CHARS) - 1)).astype(int)
+
     return np.array([[ASCII_CHARS[p] for p in row] for row in scaled])
     
 def ascii_to_image(ascii_rows, font_scale=1., thickness=3, font=cv2.FONT_HERSHEY_SIMPLEX):
@@ -98,7 +101,6 @@ def convertToEdgeASCIITxt(filePath):
     ascii_text = "\n".join(["".join(row) for row in ascii_rows])
     return ascii_text
 
-
 def process_video(input_video_path, output_video_path, ascii_type, precision = 10):
     """Process the video and create an ASCII video."""
     # Open the input video file
@@ -121,6 +123,7 @@ def process_video(input_video_path, output_video_path, ascii_type, precision = 1
         
         # Convert the frame to grayscale
         frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        # frame_gray = cv2.convertScaleAbs(frame_gray, alpha=1.5, beta=50) # Make video's brighter and add more contrast to get better output
         frame_gray = cv2.rotate(frame_gray, cv2.ROTATE_90_CLOCKWISE)  # Rotate 90 degrees clockwise
 
         # Convert the grayscale frame to ASCII
@@ -135,9 +138,13 @@ def process_video(input_video_path, output_video_path, ascii_type, precision = 1
         ascii_img_resized = cv2.resize(ascii_img, (270, 480))
 
         # Convert the resized ASCII image back to BGR to write into video
-        ascii_bgr = cv2.cvtColor(ascii_img_resized, cv2.COLOR_GRAY2BGR)
-        out_video.write(ascii_bgr)
+        # ascii_bgr = cv2.cvtColor(ascii_img_resized, cv2.COLOR_GRAY2BGR)
+        if len(ascii_img_resized.shape) == 2:  # Ensure it's grayscale
+            ascii_bgr = cv2.cvtColor(ascii_img_resized, cv2.COLOR_GRAY2BGR)
+        else:
+            ascii_bgr = ascii_img_resized  # If already 3-channel, no conversion needed
 
+        out_video.write(ascii_bgr)
 
     video_capture.release()
     out_video.release()

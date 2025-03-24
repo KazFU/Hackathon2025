@@ -101,7 +101,7 @@ def webcamVideo():
         if key == ord('r') and not recording:
             # Start recording
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            video_path = os.path.join(video_dir, f"{timestamp}.avi")
+            video_path = os.path.join(video_dir, f"{timestamp}.avi") # Change to save as mp4
             out = cv2.VideoWriter(video_path, fourcc, 20.0, (int(cam.get(3)), int(cam.get(4))))
             recording = True
             print(f"Recording started... Press 'S' to stop. Saving to {video_path}")
@@ -123,4 +123,4 @@ def webcamVideo():
         out.release()
     cv2.destroyAllWindows()
 
-#    return video_path
+    return video_path

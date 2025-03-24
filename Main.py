@@ -26,7 +26,7 @@ def main():
     print("Please select a mode of operation: ")
     print("[1] Picture File")
     print("[2] Webcam Pictures")
-    print("[3] Webcam Videos")
+    print("[3] Webcam Videos (WIP)")
     print("[4] Video File")
     print("[5] Quit")
 
@@ -118,16 +118,16 @@ def webcamPic():
                 break
             case _:
                 pass
+
 def webcamVid():
     print("Recording will start when you press 'r'. Press 'q' to stop recording.")
-    webcamVideo()
-
-def videoFile():
-    print("Please give a file path to the video (e.g., /path/to/video): ")
-    filePath = input("Select file path: ")
+    filePath = webcamVideo()
 
     print("Please give a file path for the output file (e.g., /path/to/output): ")
     outputPath = input("Select output path: ")
+
+    if not outputPath.endswith(".mp4"):
+        outputPath += ".mp4"
 
     print("Please select a conversion style: ")
     print("[1] Outline")
@@ -136,6 +136,30 @@ def videoFile():
     conversionStyle = input("Select mode: ")
     
     process_video(filePath, outputPath, conversionStyle)
+    # Make special ASCII loading screen of still (no animation due to varying processing times) squirrel with old film camera
+
+def videoFile():
+    print("Please give a file path to the video (e.g., /path/to/video): ")
+    filePath = input("Select file path: ")
+
+    # Ensure the file has a .mp4 extension if not provided
+    if not filePath.endswith(".mp4"):
+        filePath += ".mp4"
+
+    print("Please give a file path for the output file (e.g., /path/to/output): ")
+    outputPath = input("Select output path: ")
+
+    if not outputPath.endswith(".mp4"):
+        outputPath += ".mp4"
+
+    print("Please select a conversion style: ")
+    print("[1] Outline")
+    print("[2] Texture")
+    print("[3] Quit")
+    conversionStyle = input("Select mode: ")
+    
+    process_video(filePath, outputPath, conversionStyle)
+    # Make special ASCII loading screen of still (no animation due to varying processing times) squirrel with old film camera
 
 def get_pictures_folder():
     home_dir = os.path.expanduser("~")
