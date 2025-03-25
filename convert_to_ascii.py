@@ -107,10 +107,9 @@ def process_video(input_video_path, output_video_path, ascii_type, precision = 1
     video_capture = cv2.VideoCapture(input_video_path)
     
     # Get the video properties (frame count, width, height, fps)
-        # Get the video properties (frame count, width, height, fps)
     fps = 30
-    width = 270
-    height = 480
+    width = int(video_capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(video_capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
     # Define the codec and create VideoWriter object to save the output video as MP4
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")  # Use "mp4v" codec for output MP4 video
@@ -124,7 +123,9 @@ def process_video(input_video_path, output_video_path, ascii_type, precision = 1
         # Convert the frame to grayscale
         frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         # frame_gray = cv2.convertScaleAbs(frame_gray, alpha=1.5, beta=50) # Make video's brighter and add more contrast to get better output
-        frame_gray = cv2.rotate(frame_gray, cv2.ROTATE_90_CLOCKWISE)  # Rotate 90 degrees clockwise
+        # frame_gray = cv2.rotate(frame_gray, cv2.ROTATE_90_CLOCKWISE)  # Rotate 90 degrees clockwise
+
+        # Works for normal videos, but stretches vertical phone vids
 
         # Convert the grayscale frame to ASCII
         ascii_rows =""
@@ -135,7 +136,7 @@ def process_video(input_video_path, output_video_path, ascii_type, precision = 1
         ascii_img = ascii_to_image(ascii_rows)
 
         # Resize the ASCII image to match the video dimensions
-        ascii_img_resized = cv2.resize(ascii_img, (270, 480))
+        ascii_img_resized = cv2.resize(ascii_img, (width, height))
 
         # Convert the resized ASCII image back to BGR to write into video
         # ascii_bgr = cv2.cvtColor(ascii_img_resized, cv2.COLOR_GRAY2BGR)

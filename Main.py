@@ -9,6 +9,8 @@ import platform
 import time
 import cv2
 
+# TODO: refactor Main.py code
+
 def main():
     logo = r""" 
          __                                                 __     __
@@ -26,8 +28,8 @@ def main():
     print("Please select a mode of operation: ")
     print("[1] Picture File")
     print("[2] Webcam Pictures")
-    print("[3] Webcam Videos (WIP)")
-    print("[4] Video File")
+    print("[3] Webcam Videos (phone 'vertical' videos are borked)")
+    print("[4] Video File (phone 'vertical' videos are borked)")
     print("[5] Quit")
 
     while True:
